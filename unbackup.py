@@ -22,7 +22,6 @@ CONFIG_VARIABLES = (
     '7zip',
     'name',
     'mx',
-    'full_alert',
 )
 
 CONFIG_LIST_VARIABLES = (
@@ -184,19 +183,24 @@ def diff_backup(config):
 
 
 def main(argv):
+    if len(sys.argv) < 2 or len(sys.argv) > 3:
+        sys.stderr.write("Usage: {} <config file> [full|diff]\n".format(sys.argv[0]))
+        sys.exit(2) 
+
     config = read_config(argv[1])
 
-    if argv[2] == 'full':
-        full_backup(config)
-    elif argv[2] == 'diff':
+    if len(argv) < 3:
         diff_backup(config)
     else:
-        raise ValueError("Excepected full or diff")
+        if argv[2] == 'full':
+            full_backup(config)
+        elif argv[2] == 'diff':
+            diff_backup(config)
+        else:
+            raise ValueError("Excepected full or diff")
+
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        sys.stderr.write("Usage: {} <config file> <full|diff>\n".format(sys.argv[0]))
-    else:
         main(sys.argv)
 
