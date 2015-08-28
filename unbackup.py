@@ -17,6 +17,7 @@ DEFAULT_CONFIG = {
     '7zip': '7z',
     'mx': 5,
     'exclude': list(),
+    'exclude-recursive': list(),
 }
 
 CONFIG_VARIABLES = (
@@ -30,6 +31,7 @@ CONFIG_VARIABLES = (
 CONFIG_LIST_VARIABLES = (
     'backup',
     'exclude',
+    'exclude-recursive',
 )
 
 def read_config(filename):
@@ -140,6 +142,9 @@ def full_backup(config):
     ]
 
     for i in config['exclude']:
+        pargs.append('-x!' + i)
+
+    for i in config['exclude-recursive']:
         pargs.append('-xr!' + i)
 
     for i in config['backup']:
@@ -167,6 +172,9 @@ def diff_backup(config):
     ]
 
     for i in config['exclude']:
+        pargs.append('-x!' + i)
+
+    for i in config['exclude-recursive']:
         pargs.append('-xr!' + i)
 
     for i in config['backup']:
