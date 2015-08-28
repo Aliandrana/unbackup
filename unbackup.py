@@ -8,7 +8,10 @@ import datetime
 import subprocess
 import os.path
 from copy import deepcopy
-from configparser import ConfigParser
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
 DEFAULT_CONFIG = {
     '7zip': '7z',
